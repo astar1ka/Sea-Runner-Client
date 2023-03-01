@@ -1,0 +1,20 @@
+.chat_window{
+    max-width: 38rem;
+    padding: 2rem;
+    margin: auto;
+}
+
+.chat-messages_window{
+    max-width: 38rem;
+    margin: auto;
+}
+
+.--allMessages{
+    height: 20rem;
+    overflow-y: auto;
+    background-color: #3178b363;
+    text-align: left;
+    padding-bottom: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
