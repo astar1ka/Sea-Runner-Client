@@ -9,7 +9,7 @@ export default class Ship extends Entity{
     private canTurn: boolean = true;
     constructor(scene: Scene, x: number, y: number, texture: string){
         super(scene, x, y, texture);
-        this.setDisplaySize(64,64);
+        this.setDisplaySize(128,128);
         this.addToDisplayList();
         this.scene.physics.add.existing(this);
     }

@@ -10,8 +10,8 @@ export default function Login(props: any) {
 
     const loginHandler = async () => {
         if (login.current?.value && password.current?.value) {
-            const data = await Server.login(login.current?.value, password.current?.value);
-            if (data) setState('game');
+            //const data = await Server.login(login.current?.value, password.current?.value);
+            /*if (data)*/ setState('game');
         }
     }
     return (<div className="login-image">
