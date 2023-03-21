@@ -1,4 +1,4 @@
-import Ship from "../Entites/Ship";
+import Ship from "../Entites/Ship/Ship";
 
 export default class ShipControl{
     private scene;
@@ -35,16 +35,34 @@ export default class ShipControl{
 
     on(){
         this.speedUp.on('down', () => {
-            this.ship.setSpeed(1);
+            this.ship.speedUp();
+        })
+        this.speedDown.on('down', () => {
+            this.ship.speedDown();
         })
         this.stop.on('down', () => {
-            this.ship.setSpeed(0);
+            this.ship.stopped();
         })
         this.rotateClock.on('down', () => {
-            this.ship.turn(false);
+            this.ship.turnOn(false);
         })
         this.rotateAntiClock.on('down', () => {
-            this.ship.turn(true);
+            this.ship.turnOn(true);
+        })
+        this.rotateClock.on('up', () => {
+            this.ship.turnOff();
+        })
+        this.rotateAntiClock.on('up', () => {
+            this.ship.turnOff();
+        })
+        this.attack.on('up', () => {
+            this.ship.fire();
+        })
+        this.rightSnipe.on('up', () => {
+            this.ship.snipeRight = 1;
+        })
+        this.leftSnipe.on('up', () => {
+            this.ship.snipeRight = -1;
         })
     }
 }

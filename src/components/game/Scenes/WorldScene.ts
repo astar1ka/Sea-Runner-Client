@@ -2,7 +2,9 @@ import Phaser from "phaser";
 import tileMap from "../../../assets/tileMap.json"
 import spriteMapSheet from '../../../../src/assets/spriteMap.webp'
 import ship from "../../../../src/assets/ship.png"
-import Ship from "../Source/Entites/Ship";
+import cannonball from "../../../assets/cannonBall.webp"
+import explosion from "../../../assets/explosion.webp"
+import Ship from "../Source/Entites/Ship/Ship";
 import ShipControl from "../Source/Control/ShipControl";
 
 export default class WorldScene extends Phaser.Scene{
@@ -14,6 +16,8 @@ export default class WorldScene extends Phaser.Scene{
         this.load.image('spriteMapSheet', spriteMapSheet);
         this.load.tilemapTiledJSON('sea', tileMap);
         this.load.spritesheet('ship',ship,{frameWidth:256,frameHeight:256});
+        this.load.image('cannonball',cannonball);
+        this.load.image('explosion',explosion);
     }
 
     create():void{
@@ -43,10 +47,7 @@ export default class WorldScene extends Phaser.Scene{
         const player = this.data.get('player');
         const move = player.getData('move');
         const directionWind = -0.78;
-        const x = player.x +(player.speed*Math.cos(player.direction));
-        const y = player.y + (player.speed*Math.sin(player.direction));
-        const tile = this.data.get('sea').getTileAtWorldXY(x, y);
-        player.x=x;
-        player.y=y;
+        player.move();
+        player.restore();
     }
 }
