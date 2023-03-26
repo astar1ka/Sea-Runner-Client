@@ -1,6 +1,7 @@
-interface IUser {
-    token?: string,
-    name?: string
+type TUser  = {
+    readonly id: number;
+    readonly token: string;
+    readonly name: string;
 }
 
 interface IData {
@@ -8,14 +9,16 @@ interface IData {
 }
 
 export default class Server {
+    private user: TUser | null = null;
     private token: string | null = null;
     private chatHash: string = '123';
     constructor() {
     }
 
     private async send(params: IData = {}) {
-        if (this.token) {
-            params.token = this.token;
+        if (this.user) {
+            params.id = this.user.id;
+            params.token = this.user.token;
         }
         const query = Object.keys(params).map(key => {
             return params[key]
@@ -29,9 +32,8 @@ export default class Server {
         if (login && password) {
             const time = new Date();
             const data = await this.send({ method: 'login', login, password, time: time.getTime() });
-            if (data?.token) {
-                this.token = data.token;
-                delete data.token;
+            if (data as TUser) {
+                this.user = data as TUser;
             }
             return data;
         }
@@ -39,7 +41,7 @@ export default class Server {
 
     public logout() {
         const result = this.send({ method: 'logout' });
-        this.token = null;
+        this.user = null;
         this.chatHash = '123';
         return result;
     }
