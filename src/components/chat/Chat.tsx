@@ -27,12 +27,6 @@ export default function Chat(props: any) {
         if (newMessage.current?.value) Server.sendMessange(newMessage.current?.value, 0);
     }
 
-    const logoutHandler = () => {
-        clearInterval(getMessagesInterval);
-        Server.logout();
-        setState('login');
-    }
-
     return (<div className="chat_window">
         <div className="chat-messages_window">
             <div className="chat-messages_window --allMessages" >
@@ -44,9 +38,6 @@ export default function Chat(props: any) {
                 <input ref={newMessage} />
                 <button onClick={sendHandler}>Send</button>
             </div>
-        </div>
-        <div>
-            <button onClick={logoutHandler}>logOut</button>
         </div>
     </div>)
 }

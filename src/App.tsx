@@ -3,6 +3,7 @@ import Server from './services/Server';
 import { useState } from 'react';
 import Game from './components/game/Game';
 import MainPage from './components/mainPage/MainPage';
+import GamePage from './components/gamepage/GamePage';
 
 const API = new Server;
 
@@ -17,7 +18,7 @@ export default function App() {
           server={API}
           setState={setState}/>) :
         (state === "game") ? 
-        (<Game 
+        (<GamePage 
           server={API}
           setState={setState}/>) : ''
       }

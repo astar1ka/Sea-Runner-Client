@@ -1,16 +1,20 @@
 .chat_window{
+    position: absolute;
     max-width: 38rem;
-    padding: 2rem;
-    margin: auto;
+    z-index: 10;
+    bottom: 0vh;
+    left: 0vw;
+    width: 30vw;
+    height: 40vh;
 }
 
 .chat-messages_window{
-    max-width: 38rem;
+    width: 30vw;
     margin: auto;
 }
 
 .--allMessages{
-    height: 20rem;
+    height: 35vh;
     overflow-y: auto;
     background-color: #3178b363;
     text-align: left;
