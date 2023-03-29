@@ -10,14 +10,12 @@ interface IData {
 
 export default class Server {
     private user: TUser | null = null;
-    private token: string | null = null;
     private chatHash: string = '123';
     constructor() {
     }
 
     private async send(params: IData = {}) {
         if (this.user) {
-            params.id = this.user.id;
             params.token = this.user.token;
         }
         const query = Object.keys(params).map(key => {
@@ -55,7 +53,6 @@ export default class Server {
 
     public sendMessange(message: string, to: number = 0): void {
         if (message) {
-            console.log(message);
             this.send({ method: 'sendMessage', message, to });
         }
     }
@@ -69,6 +66,7 @@ export default class Server {
     }
 
     public async getAllUsers() {
-        return await this.send({ method: 'getAllUsers'});
+        const data = await this.send({ method: 'getAllUsers'});
+        return data;
     }
 }

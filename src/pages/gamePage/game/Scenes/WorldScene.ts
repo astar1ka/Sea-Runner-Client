@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import tileMap from "../../../assets/tileMap.json"
-import spriteMapSheet from '../../../../src/assets/spriteMap.webp'
-import ship from "../../../../src/assets/ship.png"
-import cannonball from "../../../assets/cannonBall.webp"
-import explosion from "../../../assets/explosion.webp"
+import tileMap from "../../../../assets/tileMap.json"
+import spriteMapSheet from '../../../../assets/spriteMap.webp'
+import ship from "../../../../assets/ship.png"
+import cannonball from "../../../../assets/cannonBall.webp"
+import explosion from "../../../../assets/explosion.webp"
 import Ship from "../Source/Entites/Ship/Ship";
 import ShipControl from "../Source/Control/ShipControl";
 
@@ -13,6 +13,9 @@ export default class WorldScene extends Phaser.Scene{
     }
 
     preload():void{
+        window.addEventListener('resize', () => {
+            this.scale.refresh();
+        })
         this.load.image('spriteMapSheet', spriteMapSheet);
         this.load.tilemapTiledJSON('sea', tileMap);
         this.load.spritesheet('ship',ship,{frameWidth:256,frameHeight:256});
@@ -32,15 +35,10 @@ export default class WorldScene extends Phaser.Scene{
         const player = new Ship(this,200,200, 'ship');
         const Control = new ShipControl(player);
         Control.on();
-        this.physics.add.collider(player, sea, ()=>{console.log(123)});
         this.data.set('player', player);
         this.cameras.main.startFollow(player);
-        this.cameras.main.setZoom(2)
+        this.cameras.main.setZoom(0.8)
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.scale.displaySize.resize(1000);
-        this.input.on('pointerdown', (pointer: {x:number, y: number}) => {
-            console.log(sea.getTileAtWorldXY(pointer.x, pointer.y))
-        })
     }
 
     update(time: number, delta: number): void {

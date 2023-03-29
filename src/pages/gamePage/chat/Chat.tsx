@@ -1,13 +1,13 @@
 import './Chat.css';
-import { useRef, useEffect, useState, ReactNode } from "react"
+import { useRef, useEffect, useState} from "react"
 import Message from './Message/Message';
+import { isNullOrUndefined } from 'util';
 
-interface IMessage {
-    id: number,
-    from: number,
-    name: string,
-    message: string,
-    to: number
+type TMessage = {
+    id: number;
+    userIdFrom: number;
+    message: string;
+    userIdTo: number;
 }
 
 export default function Chat(props: any) {
@@ -24,19 +24,23 @@ export default function Chat(props: any) {
     }, 1000);
 
     const sendHandler = () => {
-        if (newMessage.current?.value) Server.sendMessange(newMessage.current?.value, 0);
+        if (newMessage.current?.value) {
+            Server.sendMessange(newMessage.current?.value, 'null');
+            newMessage.current.value = '';
+        };
     }
+
 
     return (<div className="chat_window">
         <div className="chat-messages_window">
             <div className="chat-messages_window --allMessages" >
-                {messages.map((mes: IMessage) => {
-                    return (<Message key={mes.id} name={mes.name} message={mes.message} />)
+            {messages.map((mes: TMessage) => { if (mes)
+                    return (<Message key={mes.id} from={mes.userIdFrom} message={mes.message} to={mes.userIdTo}/>)
                 })}
             </div>
             <div className="chat-messages_window --newMessage">
-                <input ref={newMessage} />
-                <button onClick={sendHandler}>Send</button>
+                <input className="chat_input" autoComplete="off" ref={newMessage} />
+                <button className="chat_button" onClick={sendHandler}>Send</button>
             </div>
         </div>
     </div>)

@@ -5,11 +5,13 @@ import Registration from "./registration/Registration";
 import './MainPage.css';
 import Contacts from "./contacts/Contacts";
 
+type TDiv = HTMLDivElement | null;
+
 export default function MainPage(props: any) {
     useEffect(() => {
         elements[stateMainPage]?.current?.scrollIntoView(true);
     });
-    const elements = [useRef<HTMLDivElement | null>(null), useRef<HTMLDivElement | null>(null), useRef<HTMLDivElement | null>(null)];
+    const elements = [useRef<TDiv>(null), useRef<TDiv>(null), useRef<TDiv>(null)];
     const [stateMainPage, setStateMainPage] = useState(0);
     const scrollHandler = function(event: any){
         let deltaState: number = stateMainPage;

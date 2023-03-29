@@ -10,8 +10,8 @@ export default function Login(props: any) {
 
     const loginHandler = async () => {
         if (login.current?.value && password.current?.value) {
-            //const data = await Server.login(login.current?.value, password.current?.value);
-            /*if (data)*/ setState('game');
+            const data = await Server.login(login.current?.value, password.current?.value);
+            if (data) setState('game');
         }
     }
     return (<div className="login-image">
@@ -19,14 +19,14 @@ export default function Login(props: any) {
             <p className="GameName">Sea Runner</p>
         <div>
             <p>Логин</p>
-            <input className="loginInput" ref={login} />
+            <input className="mainPageInput" ref={login} />
         </div>
         <div>
             <p>Пароль</p>
-            <input type="password" className="loginInput" ref={password} />
+            <input type="password" className="mainPageInput" ref={password} />
         </div>
         <div>
-            <button className="loginButton" onClick={loginHandler}><p className='loginButtonCaption'>Вход</p></button>
+            <button className="mainPageButton" onClick={loginHandler}><p className='loginButtonCaption'>Вход</p></button>
         </div>
             </div>
         </div>

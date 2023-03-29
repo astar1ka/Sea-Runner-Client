@@ -32,7 +32,7 @@
     font-size: 36px;
 }
 
-.loginButton{
+.mainPageButton{
     font-family: 'PlayfairDisplay';
     display: flex;
     justify-content: center;
@@ -48,23 +48,23 @@
     font-size: 25px;
 }
 
-.loginButton:hover{
+.mainPageButton:hover{
     box-shadow: 0 0 0 3px black;
     outline: none;
 }
 
-.loginButton:active{
+.mainPageButton:active{
     background: rgb(87, 74, 10);
     color: gray;
 }
 
-.loginButtonCaption{
+.mainPageButtonCaption{
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.loginInput{
+.mainPageInput{
     font-family: 'PlayfairDisplay';
     display: block;
     font-size: 20px;
@@ -72,7 +72,7 @@
     border: 2px transparent;
 }
 
-.loginInput:focus{
+.mainPageInput:focus{
     box-shadow: 0 0 0 3px black;
     outline: none;
 }

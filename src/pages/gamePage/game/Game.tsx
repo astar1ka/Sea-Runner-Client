@@ -1,16 +1,18 @@
 import WorldScene from "./Scenes/WorldScene";
-//import './Game.css';
 
 export default function Game(props: any){
     const Server = props.server;
     const setState = props.setState;
-
+    const scaleWidth = window.innerWidth/window.innerHeight;
     let scene = new WorldScene('WorldScene');
         const config = {
             type: Phaser.AUTO,
-            width: '100%', 
-            height: '100%',
-            parent: 'game',
+            scale: {
+                mode: Phaser.Scale.FIT,
+                width: 512*scaleWidth,
+                height: 512
+            },
+            parent: 'gamePage_window',
             fps: {
                 target: 60,
                 forceSetTimeOut: false
@@ -32,5 +34,5 @@ export default function Game(props: any){
         
         const game = new Phaser.Game(config);
 
-    return(<div id="game"/>);
+    return(<div/>);
 }

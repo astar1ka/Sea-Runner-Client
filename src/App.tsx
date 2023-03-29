@@ -1,9 +1,8 @@
 import './App.css';
 import Server from './services/Server';
 import { useState } from 'react';
-import Game from './components/game/Game';
-import MainPage from './components/mainPage/MainPage';
-import GamePage from './components/gamepage/GamePage';
+import MainPage from './pages/mainPage/MainPage';
+import GamePage from './pages/gamePage/GamePage';
 
 const API = new Server;
 
