@@ -1,6 +1,0 @@
-.mainPageWindow{
-    max-height: 100vh;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
-    overflow: hidden;
-}
