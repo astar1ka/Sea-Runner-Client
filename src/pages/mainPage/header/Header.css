@@ -1,0 +1,36 @@
+.header{
+    text-shadow: 4px 4px 4px black;
+    font-size: 3ch;
+    left:5vw;
+    top: 7vh;
+    display: table;
+    position: fixed;
+    color: white;
+    min-width: 60vw;
+    margin: auto;
+    text-align: center;
+    table-layout: fixed;
+}
+
+.button:hover{
+    text-shadow: 1px 1px 1px black;
+}
+
+.active{
+    border-bottom: 0.5vh solid rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px black;
+}
+
+.enter{
+    display: table-cell;
+    width: 33%;
+}
+
+.registartion{
+    display: table-cell;
+    width: 33%;
+}
+.contacts{
+    display: table-cell;
+    width: 33%;
+}
