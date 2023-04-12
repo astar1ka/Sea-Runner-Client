@@ -21,7 +21,7 @@
     text-shadow: 1px 1px 1px black;
 }
 
-.enter{
+.login{
     display: table-cell;
     width: 33%;
 }
@@ -30,7 +30,7 @@
     display: table-cell;
     width: 33%;
 }
-.contacts{
+.about{
     display: table-cell;
     width: 33%;
 }

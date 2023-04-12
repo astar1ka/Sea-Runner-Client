@@ -9,6 +9,7 @@
 }
 
 .chat-messages_window{
+    word-break:break-all;
     position: relative;
     width: 30vw;
     border: none;

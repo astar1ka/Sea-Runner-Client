@@ -23,14 +23,12 @@
     border-right: 5px solid rgb(117, 86, 13);
     background-color: rgba(105, 91, 21, 0.7);
     display: flex;
-    justify-content: center;
+    padding-top: -2vh;
     align-items: center;
     flex-direction: column;
 }
 
-.GameName{
-    font-size: 36px;
-}
+
 
 .mainPageButton{
     font-family: 'PlayfairDisplay';
@@ -75,4 +73,27 @@
 .mainPageInput:focus{
     box-shadow: 0 0 0 3px black;
     outline: none;
+}
+
+.errorLogin{
+    display: flex;
+    z-index: 10;
+    font-size: 20px;
+    color: white
+}
+
+.login-logo-image{
+    margin-top: 7vh;
+    padding-top: 0;
+    height: 25vh;
+    width: 25vh;
+    display: flex;
+    z-index: 10;
+    color: white
+}
+
+.GameName{
+    font-size: 5vh;
+    margin-top: -3vh;
+    margin-bottom: -2vh;
 }

@@ -1,34 +1,29 @@
-import { useState } from 'react';
-import {io, Socket} from 'socket.io-client';
-
-import Server from './services/Server';
+import {useState} from 'react';
+import IOSocket from './services/IOSocket';
 
 import MainPage from './pages/mainPage/MainPage';
 import GamePage from './pages/gamePage/GamePage';
 
 import './App.css';
 
-const API = new Server;
+enum Pages {MainPage = 'MainPage', GamePage = 'GamePage'};
+
+const socket = new IOSocket;
 
 export default function App() {
-  const socket: Socket = io('http://localhost:3001');
-  socket.on('connect', () => {
-    socket.on('GET_MESSAGES', (data) => console.log(data));
-    const message = Math.round(Math.random() * 100000).toString;
-    socket.emit('SEND_MESSAGE', message);
-  })
-  const [state, setState] = useState("mainPage");
+  const [page, setPage] = useState<Pages>(Pages.MainPage);
+
   return (
     <div className="App">
       {
-        (state === "mainPage") ? 
+        (page === Pages.MainPage) ? 
         (<MainPage
-          server={API}
-          setState={setState}/>) :
-        (state === "game") ? 
+          setPage = {setPage}
+          socket = {socket}/>) :
+        (page === Pages.GamePage) ? 
         (<GamePage 
-          server={API}
-          setState={setState}/>) : ''
+          setPage = {setPage}
+          socket = {socket}/>) : ''
       }
     </div>
   );

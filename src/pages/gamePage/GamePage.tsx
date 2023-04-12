@@ -1,21 +1,26 @@
+import { useState } from "react";
+
 import Chat from "./chat/Chat";
 import Game from "./game/Game";
 import GameMenu from "./gameMenu/GameMenu";
+import HelloScreen from "./helloScreen/HelloScreen";
+
 import './GamePage.css'
+
+
 
 export default function GamePage(props: any) {
     return (<div className="gamePage_window">
+        <HelloScreen/>
         <Game
-        server = {props.server}
-        setState = {props.setState}
+        socket = {props.socket}
         />
         <Chat
-        server = {props.server}
-        setState = {props.setState}
+        socket = {props.socket}
         />
         <GameMenu
-        server = {props.server}
-        setState = {props.setState}
+        socket = {props.socket}
+        setPage = {props.setState}
         />
     </div>)
 }

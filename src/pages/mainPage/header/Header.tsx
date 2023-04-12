@@ -1,15 +1,24 @@
+import { useRef, useState } from 'react';
+import { MainPages } from '../MainPage';
 import './Header.css';
 
 export default function Header(props:any) {
-    const stateHeader = props.stateHeader;
-    const setStateHeader = props.setStateHeader;
-    const sheetState = ['enter','registration','contacts']
-    document.querySelectorAll('.button')?.forEach((el) => el.classList.remove('active'));
-    document.querySelector(`.${sheetState[stateHeader]}`)?.classList.add('active');
+    const {activeMainPage, setActiveMainPage} = props;
+    const [activeButton, setActiveButton] = useState(MainPages.Login);
+
+    if (activeButton != activeMainPage) setActiveButton(activeMainPage);
+
+    const onCliclHandler = (page:MainPages)=> {
+        setActiveMainPage(page);
+    }
+
+    const setClassActive = (buttonPage: MainPages):string => {
+        return (activeButton === buttonPage) ? 'active': ''
+    }
 
     return (<div className='header'>
-        <div className="button enter active" onClick={() => setStateHeader(0)}>Вход</div>
-        <div className="button registration" onClick={() => setStateHeader(1)}>Регистрация</div>
-        <div className="button contacts" onClick={() => setStateHeader(2)}>Контакты</div>
+        <div className={'button login ' + setClassActive(MainPages.Login)} onClick={() => onCliclHandler(MainPages.Login)}>Вход</div>
+        <div className={'button registration ' + setClassActive(MainPages.Registration)}  onClick={() => onCliclHandler(MainPages.Registration)}>Регистрация</div>
+        <div className={'button about ' + setClassActive(MainPages.About)} onClick={() => onCliclHandler(MainPages.About)}>Об игре</div>
     </div>)
 }

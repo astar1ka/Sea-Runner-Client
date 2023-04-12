@@ -1,7 +1,7 @@
 import './Chat.css';
-import { useRef, useEffect, useState} from "react"
+import { useRef, useState} from "react"
 import Message from './Message/Message';
-import { isNullOrUndefined } from 'util';
+import useSubcriber from '../../../hooks/useSubcriber';
 
 type TMessage = {
     id: number;
@@ -10,26 +10,32 @@ type TMessage = {
     userIdTo: number;
 }
 
-export default function Chat(props: any) {
-    const Server = props.server;
-    const setState = props.setState;
-    const newMessage = useRef<HTMLInputElement | null>(null);
-    const [messages, getMessages] = useState([]);
-    const getMessagesInterval = setInterval(async () => {
-        let messages = await Server.getMessages();
-        if (messages) {
-            clearInterval(getMessagesInterval);
-            getMessages(messages);
-        }
-    }, 1000);
+var messagesToAll: TMessage [] = [];
+var messagesPrivate: TMessage [] = [];
 
+export default function Chat(props: any) {
+    const socket = props.socket;
+    console.log(socket);
+    const newMessage = useRef<HTMLInputElement | null>(null);
+    const [dirtyMessages, setDirtyMessages] = useState([]);
+    const subcriberToAll = useSubcriber((data: TMessage []) => {
+        setDirtyMessages([]);
+        messagesToAll = data || [];
+    }, () => {});
+    const subcriberPrivate = useSubcriber((data: TMessage []) => {
+        setDirtyMessages([]);
+        messagesPrivate = data || [];
+    }, () => {});
+    socket.getMessagesToAll(subcriberToAll);
+    socket.getMessagesPrivate(subcriberPrivate);
+
+    const messages = messagesToAll.concat(messagesPrivate).sort((a, b) => a.id - b.id);
     const sendHandler = () => {
         if (newMessage.current?.value) {
-            Server.sendMessange(newMessage.current?.value, 'null');
+            socket.sendMessage(newMessage.current.value);
             newMessage.current.value = '';
         };
     }
-
 
     return (<div className="chat_window">
         <div className="chat-messages_window">

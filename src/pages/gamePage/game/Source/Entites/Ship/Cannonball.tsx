@@ -38,9 +38,9 @@ export default class Cannonball extends Phaser.GameObjects.Sprite{
     }
 
     public move(){
-        this.x += 8 * Math.cos(this.direction);
-        this.y += 8 * Math.sin(this.direction);
-        this.distance +=8;
+        this.x += 20 * Math.cos(this.direction);
+        this.y += 20 * Math.sin(this.direction);
+        this.distance +=20;
         if (this.distance < 200) setTimeout(this.move.bind(this), 20); else this.visible = false;
     }
 }

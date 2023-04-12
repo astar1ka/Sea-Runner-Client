@@ -1,10 +1,9 @@
 import WorldScene from "./Scenes/WorldScene";
 
 export default function Game(props: any){
-    const Server = props.server;
-    const setState = props.setState;
+    const socket = props.socket;
     const scaleWidth = window.innerWidth/window.innerHeight;
-    let scene = new WorldScene('WorldScene');
+    let scene = new WorldScene('WorldScene', socket);
         const config = {
             type: Phaser.AUTO,
             scale: {
@@ -33,6 +32,5 @@ export default function Game(props: any){
         };
         
         const game = new Phaser.Game(config);
-
     return(<div/>);
 }
