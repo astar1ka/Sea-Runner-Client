@@ -19,24 +19,30 @@ export default function Login(props: any) {
         }
     }
 
-    return (<div className="login-image">
-        <div className="login-window">
-            <div className='login-logo'>
-            <img className='login-logo-image' src={logo}/>
-            <p className="GameName">Sea</p>
-            <p className="GameName">Runner</p>
+    return (
+        <div className="login-image">
+            <div className="login-window">
+                <div className='login-logo'>
+                    <img className='login-logo-image' src={logo}/>
+                </div>
+                <div className="window-elems">
+                <form action="">
+                    <h2 className="h2-login">Sea Runner</h2>
+                    <div className="inputbox">
+                        <i className="icon-user"></i>
+                        <input ref={login} placeholder=' ' required/>    
+                        <label htmlFor='login'>Логин</label>
+                    </div>
+                    <div className="inputbox" id="passIn"> 
+                        <i className="icon-lock"></i>   
+                        <input  type="password" ref={password} placeholder=' ' required/>
+                        <label htmlFor='password'>Пароль</label>
+                    </div>
+                    <button className="loginButton" onClick={loginHandler}>Войти</button>
+                    <p className={'errorLogin' + ((loginStatus) ? ' hide' : '')}>Неверный логин или пароль</p>
+                    </form>
+                </div>
             </div>
-        <div>
-            <p>Логин</p>
-            <input className="mainPageInput" ref={login} />
         </div>
-        <div>
-            <p>Пароль</p>
-            <input type="password" className="mainPageInput" ref={password} />
-        </div>
-            <button className="mainPageButton" onClick={loginHandler}><p className='loginButtonCaption'>Вход</p></button>
-            <p className={'errorLogin' + ((loginStatus) ? ' hide' : '')}>Неверный логин или пароль</p>
-        </div>
-        </div>
-)
+    )
 }
