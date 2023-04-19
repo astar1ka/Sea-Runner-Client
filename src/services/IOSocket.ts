@@ -33,7 +33,7 @@ export default class IOSocket{
             this.user = user;
             subscriber(user ? true : false);
         });
-        this.socket.emit('LOG_IN', {login, password});
+        this.socket.emit('LOG_IN', login, password);
     }
 
     public logout(subscriber: Function):void{
@@ -42,16 +42,15 @@ export default class IOSocket{
                 if (result)this.user = null;
                 subscriber(result);
             });
-            this.socket.emit('LOG_OUT', {token: this.user.token});
+            this.socket.emit('LOG_OUT', this.user.token);
         }
     }
 
     public registration(login:string, password: string, name: string, subscriber: Function){
         this.socket.once('REGISTRATION', (result: boolean) => {
-            console.log(result);
             subscriber(result);
         });
-        this.socket.emit('REGISTRATION', {login, password, name});
+        this.socket.emit('REGISTRATION', login, password, name);
     }
 
     public getMessagesToAll(subscriber:Function){

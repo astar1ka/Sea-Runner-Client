@@ -23,7 +23,7 @@ export default function Registration(props:any){
             <div className="reg-window">
                 <h2 className="h2-reg">Представьтесь, капитан</h2>
                 <div className="windowElems">
-                <form action="">
+                <div>
                     
                     <div className="inputbox">
                         <i className="icon-user"></i>
@@ -41,7 +41,7 @@ export default function Registration(props:any){
                         <label htmlFor='login'>Имя</label>
                     </div>
                     <button className="regButton" onClick={registrationHandler}>Регистрация</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

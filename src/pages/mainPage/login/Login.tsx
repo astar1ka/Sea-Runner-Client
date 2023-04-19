@@ -26,7 +26,7 @@ export default function Login(props: any) {
                     <img className='login-logo-image' src={logo}/>
                 </div>
                 <div className="window-elems">
-                <form action="">
+                <div>
                     <h2 className="h2-login">Sea Runner</h2>
                     <div className="inputbox">
                         <i className="icon-user"></i>
@@ -40,7 +40,7 @@ export default function Login(props: any) {
                     </div>
                     <button className="loginButton" onClick={loginHandler}>Войти</button>
                     <p className={'errorLogin' + ((loginStatus) ? ' hide' : '')}>Неверный логин или пароль</p>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
