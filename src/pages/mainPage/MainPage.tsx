@@ -9,7 +9,6 @@ import './MainPage.css';
 
 
 export enum MainPages { Login, Registration, About };
-
 export default function MainPage(props: any) {
     const [activeMainPage, setActiveMainPage] = useState(MainPages.Login);
 
@@ -17,16 +16,16 @@ export default function MainPage(props: any) {
         <Header
             activeMainPage={activeMainPage}
             setActiveMainPage={setActiveMainPage} />
-        <div className = {'page' + ((activeMainPage != MainPages.Login) ? ' inactive' : '')}>
+        <div className = { ((activeMainPage != MainPages.Login) ? ' inactive' : '')}>
             <Login
                 socket={props.socket}
                 setPage={props.setPage} />
         </div>
-        <div className = {'page' + ((activeMainPage != MainPages.Registration) ? ' inactive' : '')}>
+        <div className = {((activeMainPage != MainPages.Registration) ? ' inactive' : '')}>
             <Registration
                 socket={props.socket} />
             </div>
-        <div className = {'page' + ((activeMainPage != MainPages.About) ? ' inactive' : '')}>   
+        <div className = { ((activeMainPage != MainPages.About) ? ' inactive' : '')}>   
             <About />
         </div>
     </div>)

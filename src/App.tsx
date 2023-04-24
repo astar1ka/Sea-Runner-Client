@@ -7,12 +7,11 @@ import GamePage from './pages/gamePage/GamePage';
 import './App.css';
 
 enum Pages {MainPage = 'MainPage', GamePage = 'GamePage'};
-
 const socket = new IOSocket;
 
 export default function App() {
   const [page, setPage] = useState<Pages>(Pages.MainPage);
-
+  console.log(Pages)
   return (
     <div className="App">
       {
