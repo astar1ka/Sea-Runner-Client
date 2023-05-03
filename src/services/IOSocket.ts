@@ -28,12 +28,8 @@ export default class IOSocket{
     constructor(){
     }
 
-    public login(login: string, password: string, subscriber: Function):void{
-        this.socket.once('LOG_IN', (user: TUser) => {
-            this.user = user;
-            subscriber(user ? true : false);
-        });
-        this.socket.emit('LOG_IN', login, password);
+    public login(login: string, password: string, cbLogin: Function):void{
+        this.socket.emit('LOG_IN', login, password, cbLogin);
     }
 
     public logout(subscriber: Function):void{
@@ -46,11 +42,8 @@ export default class IOSocket{
         }
     }
 
-    public registration(login:string, password: string, name: string, subscriber: Function){
-        this.socket.once('REGISTRATION', (result: boolean) => {
-            subscriber(result);
-        });
-        this.socket.emit('REGISTRATION', login, password, name);
+    public registration(login:string, password: string, name: string, callback: Function){
+        this.socket.emit('REGISTRATION', login, password, name, callback);
     }
 
     public getMessagesToAll(subscriber:Function){

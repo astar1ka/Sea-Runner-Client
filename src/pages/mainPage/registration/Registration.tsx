@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import './Registration.css';
-import useSubcriber from '../../../hooks/useSubcriber';
+
 
 enum Status {Success, Fail, Registration}
 
@@ -10,11 +10,14 @@ export default function Registration(props:any){
     const login = useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
     const name = useRef<HTMLInputElement | null>(null);
-    const subscriber = useSubcriber(()=>setStatusRegistration(Status.Success), () => setStatusRegistration(Status.Fail));
+
+    const cbRegictration = (result: boolean) => {
+        setStatusRegistration((result) ? Status.Success : Status.Fail);
+    }
 
     const registrationHandler = async () => {
         if (login.current?.value && password.current?.value && name.current?.value) {
-            socket.registration(login.current.value, password.current.value, name.current.value, subscriber)
+            socket.registration(login.current.value, password.current.value, name.current.value, cbRegictration)
         }
     }
 

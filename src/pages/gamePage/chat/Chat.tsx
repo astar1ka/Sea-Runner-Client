@@ -1,7 +1,6 @@
 import './Chat.css';
 import { useRef, useState} from "react"
 import Message from './Message/Message';
-import useSubcriber from '../../../hooks/useSubcriber';
 
 type TMessage = {
     id: number;
@@ -18,16 +17,6 @@ export default function Chat(props: any) {
     console.log(socket);
     const newMessage = useRef<HTMLInputElement | null>(null);
     const [dirtyMessages, setDirtyMessages] = useState([]);
-    const subcriberToAll = useSubcriber((data: TMessage []) => {
-        setDirtyMessages([]);
-        messagesToAll = data || [];
-    }, () => {});
-    const subcriberPrivate = useSubcriber((data: TMessage []) => {
-        setDirtyMessages([]);
-        messagesPrivate = data || [];
-    }, () => {});
-    socket.getMessagesToAll(subcriberToAll);
-    socket.getMessagesPrivate(subcriberPrivate);
 
     const messages = messagesToAll.concat(messagesPrivate).sort((a, b) => a.id - b.id);
     const sendHandler = () => {

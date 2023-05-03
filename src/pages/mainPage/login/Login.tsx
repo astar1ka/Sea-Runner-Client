@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
-import './Login.css';
-import useSubcriber from "../../../hooks/useSubcriber";
+
 import logo from '../../../source/logo.png';
+import './Login.css';
 
 export default function Login(props: any) {
     const {socket, setPage} = props;
@@ -11,11 +11,14 @@ export default function Login(props: any) {
     const login = useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
 
-    const subscriber = useSubcriber(() => setPage('GamePage'), () => setLoginStatus(false));
+    const cbLogin = (data: object | null) => {
+        if (data) setLoginStatus(setPage('GamePage'));
+        else setLoginStatus(false);
+    }
 
     const loginHandler = () => {
         if (login.current?.value && password.current?.value){
-            socket.login(login.current.value, password.current.value, subscriber);
+            socket.login(login.current.value, password.current.value, cbLogin);
         }
     }
 
