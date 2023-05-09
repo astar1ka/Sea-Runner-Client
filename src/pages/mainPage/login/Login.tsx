@@ -1,36 +1,34 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 import logo from '../../../source/logo.png';
 import './Login.css';
+import { Pages } from "../../../App";
 
 export default function Login(props: any) {
-    const {socket, setPage} = props;
 
     const [loginStatus, setLoginStatus] = useState(true);
 
     const login = useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
 
-    const cbLogin = (data: object | null) => {
-        if (data) setLoginStatus(setPage('GamePage'));
+    const loginCallback = (data: object | null) => {
+        if (data) props.mediator.call('SET_PAGE',[Pages.GamePage]);
         else setLoginStatus(false);
     }
 
     const loginHandler = () => {
         if (login.current?.value && password.current?.value){
-            socket.login(login.current.value, password.current.value, cbLogin);
+            props.mediator.call('LOG_IN',[login.current.value, password.current.value, loginCallback]);
         }
     }
 
     return (
         <div className="login-image">
             <div className="login-window">
-                <div className='login-logo'>
-                    <img className='login-logo-image' src={logo}/>
-                </div>
-                <div className="window-elems">
+                <img className='login-logo-image' src={logo}/>
+                <h2 className="h2-login">Sea Runner</h2>
+                <div className="login-window-elems">
                 <div>
-                    <h2 className="h2-login">Sea Runner</h2>
                     <div className="inputbox">
                         <i className="icon-user"></i>
                         <input ref={login} placeholder=' ' required/>    

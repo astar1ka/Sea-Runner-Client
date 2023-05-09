@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from "./header/Header";
 import Login from "./login/Login";
@@ -13,20 +13,18 @@ export enum MainPages { Login, Registration, About };
 export default function MainPage(props: any) {
     const [activeMainPage, setActiveMainPage] = useState(MainPages.Login);
 
+    useEffect(() => props.mediator.subscribe('SET_ACTIVE_MAIN_PAGE', (page: MainPages) => setActiveMainPage(page)), [])
+
     return (<div className="mainPageWindow">
-        <Header
-            activeMainPage={activeMainPage}
-            setActiveMainPage={setActiveMainPage} />
-        <div className = {'page' + ((activeMainPage != MainPages.Login) ? ' inactive' : '')}>
-            <Login
-                socket={props.socket}
-                setPage={props.setPage} />
+        <Header mediator={props.mediator} />
+        <div className={'page' + ((activeMainPage != MainPages.Login) ? ' inactive' : '')}>
+            <Login mediator={props.mediator}/>
         </div>
-        <div className = {'page' + ((activeMainPage != MainPages.Registration) ? ' inactive' : '')}>
+        <div className={'page' + ((activeMainPage != MainPages.Registration) ? ' inactive' : '')}>
             <Registration
                 socket={props.socket} />
-            </div>
-        <div className = {'page' + ((activeMainPage != MainPages.About) ? ' inactive' : '')}>   
+        </div>
+        <div className={'page' + ((activeMainPage != MainPages.About) ? ' inactive' : '')}>
             <About />
         </div>
     </div>)

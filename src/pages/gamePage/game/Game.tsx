@@ -1,9 +1,8 @@
 import WorldScene from "./Scenes/WorldScene";
 
 export default function Game(props: any){
-    const socket = props.socket;
     const scaleWidth = window.innerWidth/window.innerHeight;
-    let scene = new WorldScene('WorldScene', socket);
+    let scene = new WorldScene('WorldScene');
         const config = {
             type: Phaser.AUTO,
             scale: {

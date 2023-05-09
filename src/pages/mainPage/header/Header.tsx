@@ -1,15 +1,13 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MainPages } from '../MainPage';
 import './Header.css';
 
 export default function Header(props:any) {
-    const {activeMainPage, setActiveMainPage} = props;
     const [activeButton, setActiveButton] = useState(MainPages.Login);
 
-    if (activeButton != activeMainPage) setActiveButton(activeMainPage);
-
     const onCliclHandler = (page:MainPages)=> {
-        setActiveMainPage(page);
+        props.mediator.call('SET_ACTIVE_MAIN_PAGE', [page])
+        setActiveButton(page);
     }
 
     const setClassActive = (buttonPage: MainPages):string => {

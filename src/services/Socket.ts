@@ -1,4 +1,5 @@
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
+import Mediator from "./Mediator";
 
 type TUser  = {
     readonly id: number;
@@ -18,6 +19,7 @@ export enum MESSAGES {
     GET_MESSAGES='GET_MESSAGES',
     //GAME
     GET_CAPTAIN='GET_CAPTAIN',
+    ADD_CAPTAIN='ADD_CAPTAIN',
     GET_START='GET_START',
     GAME_LOADED='GAME_LOADED'
 }
@@ -25,25 +27,28 @@ export enum MESSAGES {
 export default class IOSocket{
     private socket = io('http://localhost:3001');
     private user: TUser = null;
-    constructor(){
+    constructor(private mediator: Mediator){
+        const {LOG_IN, GET_CAPTAIN,ADD_CAPTAIN} = this.mediator.getEventsNames();
+        this.mediator.subscribe(LOG_IN, (login: string,password: string,callback: Function) => this.login(login,password,callback));
+        this.mediator.subscribe(ADD_CAPTAIN, (allianceId: number,callback: Function) => this.addCaptain(allianceId,callback));
+        this.mediator.subscribe(GET_CAPTAIN, (callback: Function) => this.getCaptain(callback));       
     }
 
-    public login(login: string, password: string, cbLogin: Function):void{
-        this.socket.emit('LOG_IN', login, password, cbLogin);
+    public login(login: string, password: string, callback: Function):void{
+        this.socket.emit(MESSAGES.LOG_IN, login, password, (user:TUser) => {
+            this.user = user
+            callback(user);
+        });
     }
 
-    public logout(subscriber: Function):void{
+    public logout(callback: Function):void{
         if (this.user){
-            this.socket.once('LOG_OUT', (result: boolean) => {
-                if (result)this.user = null;
-                subscriber(result);
-            });
-            this.socket.emit('LOG_OUT', this.user.token);
+            this.socket.emit(MESSAGES.LOG_OUT, this.user.token,callback);
         }
     }
 
     public registration(login:string, password: string, name: string, callback: Function){
-        this.socket.emit('REGISTRATION', login, password, name, callback);
+        this.socket.emit(MESSAGES.REGISTRATION, login, password, name, callback);
     }
 
     public getMessagesToAll(subscriber:Function){
@@ -69,4 +74,13 @@ export default class IOSocket{
     public gameLoaded(){
         if (this.user) this.socket.emit(MESSAGES.GAME_LOADED);
     }
+
+    public getCaptain(callback:Function){
+        if (this.user) this.socket.emit(MESSAGES.GET_CAPTAIN,this.user.token, callback);
+    }
+
+    public addCaptain(allianceId: number, callback: Function){
+        if (this.user) this.socket.emit(MESSAGES.ADD_CAPTAIN,this.user.token, allianceId, callback);
+    }
+
 }

@@ -6,10 +6,9 @@ import cannonball from "../../../../assets/cannonBall.webp"
 import explosion from "../../../../assets/explosion.webp"
 import Ship from "../Source/Entites/Ship/Ship";
 import ShipControl from "../Source/Control/ShipControl";
-import IOSocket from "../../../../services/IOSocket";
 
 export default class WorldScene extends Phaser.Scene{
-    constructor(config:string, private socket: IOSocket){
+    constructor(config:string){
         super(config)
     }
 
@@ -42,7 +41,6 @@ export default class WorldScene extends Phaser.Scene{
         camera.startFollow(player);
         camera.setZoom(0.8);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.socket.gameLoaded();
         setInterval(()=>{
             let cameraWidth = (this.cameras.main.width*1.5)/this.cameras.main.zoom;
             let cameraHeight = (this.cameras.main.height*1.5)/this.cameras.main.zoom;

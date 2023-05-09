@@ -1,6 +1,6 @@
 * {
     font-family: 'poppins',sans-serif;
-    letter-spacing: 1px;
+    letter-spacing: 0.01vw;
 }
 .login-image{
     height: 100vh;
@@ -15,46 +15,41 @@
 
 .login-window {
     position: relative;
-    right: 5%;
-    width: 400px;
+    right: 5vw;
+    width: 20vw;
+    min-width: 300px;
     height: 100vh;
-    background:  rgba(105, 91, 21, 0.7)
-    ;
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: 20px;
-    /* backdrop-filter: blur(125px); */
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgb(0, 0, 0);
+    background:  rgba(105, 91, 21, 0.7);
+    border: 0.2vw solid rgba(255,255,255,0.5);
+    box-shadow: 0 0.2vw 0.8vw rgb(0, 0, 0);
+    text-align: center
 }
-.window-elems {
-    position: absolute;
-    left: 50%;
-    top: 500px;
-    width: 400px;
-    transform: translate(-50%, -50%);
+.login-window-elems {
+    position: relative;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    letter-spacing: 1px;
+    letter-spacing: 0.01vw;
 }
 
 .h2-login {
     color: #fff;
-    font-size: 30px;
+    font-size: 2.5vw;
 }
 
 .inputbox{
     position: relative;
     margin: 50px 0 50px 0;
-    width: 310px;
+    max-width: 80%;
+    width: 18vw;
     border-bottom: 2px solid #fff;
 }
 
 label{
     position: absolute;
     top: 50%;
-    left: 5px;
+    left: 0.5vw;
     transform: translateY(-50%);
     color: #fff;
     font-size: 1em;
@@ -105,22 +100,20 @@ button:hover{
 
 .icon-user{
     background-image: url("../../../source/icons/user.png");
-    position: absolute;
+    position: relative;
     right: 0;
     bottom: 15px;
-    filter: invert(100%);
-    width: 25px;
-    height: 25px;
+    height: 2vh;
     background-size: cover;
+    filter: invert(100%);
 }
 
 .icon-lock{
     background-image: url("../../../source/icons/lock.png");
-    position: absolute;
+    position: relative;
     right: 0;
     bottom: 15px;
-    width: 20px;
-    height: 20px;
+    height: 2vh;
     background-size: cover;
     filter: invert(100%);
 }
@@ -133,9 +126,9 @@ button:hover{
 }
 
 .login-logo-image{
-    position: absolute;
-    top: 150px;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    height: 30vh;
+    top: 5vh;
+    margin-bottom: 1vh;
 }
 

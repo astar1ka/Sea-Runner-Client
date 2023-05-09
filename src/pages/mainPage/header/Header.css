@@ -1,6 +1,6 @@
 .header{
-    text-shadow: 4px 4px 4px black;
-    font-size: 3ch;
+    text-shadow: 0.5vw 0.5vw 0.5vw black;
+    font-size: 3vh;
     left:5vw;
     top: 7vh;
     display: table;
