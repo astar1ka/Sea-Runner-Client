@@ -1,20 +1,18 @@
 import SelectAllice from "./SelectAllice";
 import './SelectAllianceScreen.css';
-import { TCaptain } from "../GamePage";
 
-export default function SelectAllianceScreen(props: any) {
-    const callback = (captain: TCaptain) => {
-        props.callback(captain);
-    }
+type TProps = {
+    select: Function
+}
+
+export default function SelectAllianceScreen({select}: TProps) {
+    const selectHandler = (id: number) => select(id);
     return (<div className='firstRun'>
-        <SelectAllice callback={callback} 
-        id={1} 
-        mediator = {props.mediator}/>
-        <SelectAllice callback={callback} 
-        id={2} 
-        mediator = {props.mediator}/>
-        <SelectAllice callback={callback} 
-        id={3} 
-        mediator = {props.mediator}/>
+        <SelectAllice callback={selectHandler} 
+        id={1}/>
+        <SelectAllice callback={selectHandler} 
+        id={2}/>
+        <SelectAllice callback={selectHandler} 
+        id={3}/>
     </div>)
 }

@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 import './Registration.css';
+import { socket } from '../../../App';
 
 
 enum Status {Success, Fail, Registration}
 
-export default function Registration(props:any){
-    const socket = props.socket;
+export default function Registration(){
     const [statusRegistration,setStatusRegistration] = useState(Status.Registration);
+    const [active, setActive] = useState(false);
     const login = useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
     const name = useRef<HTMLInputElement | null>(null);

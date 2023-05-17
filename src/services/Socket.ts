@@ -1,7 +1,6 @@
-import { Socket, io } from "socket.io-client";
-import Mediator from "./Mediator";
+import { io } from "socket.io-client";
 
-type TUser  = {
+type TUser = {
     readonly id: number;
     readonly token: string;
     readonly name: string;
@@ -9,78 +8,76 @@ type TUser  = {
 
 export enum MESSAGES {
     //USER
-    LOG_IN='LOG_IN',
-    LOG_OUT='LOG_OUT',
-    REGISTRATION='REGISTRATION',
+    LOG_IN = 'LOG_IN',
+    LOG_OUT = 'LOG_OUT',
+    REGISTRATION = 'REGISTRATION',
     //CHAT
-    GET_ALL_USERS='LOG_OUT',
-    GET_MESSAGES_PRIVATE='LOG_OUT',
-    GET_MESSAGES_ALL='LOG_OUT',
-    GET_MESSAGES='GET_MESSAGES',
+    GET_ALL_USERS = 'LOG_OUT',
+    GET_MESSAGES_PRIVATE = 'LOG_OUT',
+    GET_MESSAGES_ALL = 'LOG_OUT',
+    GET_MESSAGES = 'GET_MESSAGES',
     //GAME
-    GET_CAPTAIN='GET_CAPTAIN',
-    ADD_CAPTAIN='ADD_CAPTAIN',
-    GET_START='GET_START',
-    GAME_LOADED='GAME_LOADED'
+    GET_CAPTAIN = 'GET_CAPTAIN',
+    ADD_CAPTAIN = 'ADD_CAPTAIN',
+    GET_START = 'GET_START',
+    GAME_LOADED = 'GAME_LOADED'
 }
 
-export default class IOSocket{
+export default class IOSocket {
     private socket = io('http://localhost:3001');
     private user: TUser = null;
-    constructor(private mediator: Mediator){
-        const {LOG_IN, GET_CAPTAIN,ADD_CAPTAIN} = this.mediator.getEventsNames();
-        this.mediator.subscribe(LOG_IN, (login: string,password: string,callback: Function) => this.login(login,password,callback));
-        this.mediator.subscribe(ADD_CAPTAIN, (allianceId: number,callback: Function) => this.addCaptain(allianceId,callback));
-        this.mediator.subscribe(GET_CAPTAIN, (callback: Function) => this.getCaptain(callback));       
+    constructor(){
+        this.socket.auth = {token: 123}
     }
 
-    public login(login: string, password: string, callback: Function):void{
-        this.socket.emit(MESSAGES.LOG_IN, login, password, (user:TUser) => {
-            this.user = user
+    public login(login: string, password: string, callback: Function): void {
+        this.socket.emit(MESSAGES.LOG_IN, login, password, (user: TUser) => {
+            this.user = user;
+            this.socket.auth = {token: user?.token}
             callback(user);
         });
     }
 
-    public logout(callback: Function):void{
-        if (this.user){
-            this.socket.emit(MESSAGES.LOG_OUT, this.user.token,callback);
+    public logout(callback: Function): void {
+        if (this.user) {
+            this.socket.emit(MESSAGES.LOG_OUT, this.user.token, callback);
         }
     }
 
-    public registration(login:string, password: string, name: string, callback: Function){
+    public registration(login: string, password: string, name: string, callback: Function) {
         this.socket.emit(MESSAGES.REGISTRATION, login, password, name, callback);
     }
 
-    public getMessagesToAll(subscriber:Function){
-        if(this.user) {
-        this.socket.removeListener('GET_MESSAGES_ALL');
-        this.socket.once('GET_MESSAGES_ALL', (data) => {
-            subscriber(true,data);
-        })
+    public getMessagesToAll(subscriber: Function) {
+        if (this.user) {
+            this.socket.removeListener('GET_MESSAGES_ALL');
+            this.socket.once('GET_MESSAGES_ALL', (data) => {
+                subscriber(true, data);
+            })
         }
     }
 
-    public getMessagesPrivate(subscriber:Function){
-            this.socket.removeListener('GET_MESSAGES_PRIVATE');
-            this.socket.on('GET_MESSAGES_PRIVATE', (data) => subscriber(true, data));
+    public getMessagesPrivate(subscriber: Function) {
+        this.socket.removeListener('GET_MESSAGES_PRIVATE');
+        this.socket.on('GET_MESSAGES_PRIVATE', (data) => subscriber(true, data));
     }
 
-    public sendMessage(message:string, toUserId:number | null){
-        if(this.user) {
+    public sendMessage(message: string, toUserId: number | null) {
+        if (this.user) {
             this.socket.emit('SEND_MESSAGE', toUserId, message, this.user.token);
         }
     }
 
-    public gameLoaded(){
+    public gameLoaded() {
         if (this.user) this.socket.emit(MESSAGES.GAME_LOADED);
     }
 
-    public getCaptain(callback:Function){
-        if (this.user) this.socket.emit(MESSAGES.GET_CAPTAIN,this.user.token, callback);
+    public getCaptain(callback: Function) {
+        if (this.user) this.socket.emit(MESSAGES.GET_CAPTAIN, this.user.token, callback);
     }
 
-    public addCaptain(allianceId: number, callback: Function){
-        if (this.user) this.socket.emit(MESSAGES.ADD_CAPTAIN,this.user.token, allianceId, callback);
+    public addCaptain(allianceId: number, callback: Function) {
+        if (this.user) this.socket.emit(MESSAGES.ADD_CAPTAIN, this.user.token, allianceId, callback);
     }
 
 }

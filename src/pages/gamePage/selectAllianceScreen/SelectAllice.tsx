@@ -6,11 +6,11 @@ export default function SelectAllice(props: any){
     const callback = props.callback;
 
     const onClickHandler = () => {
-        props.mediator.call('ADD_CAPTAIN', [allianceid, callback]);
+        callback(props.id);
     }
 
     return <div className='selectAllice' onClick={onClickHandler}>
-        <img className={'image' + allianceid} onClick={onClickHandler} />
+        <img className={'image' + allianceid}/>
         <a>{allianceName}</a>
     </div>
 }

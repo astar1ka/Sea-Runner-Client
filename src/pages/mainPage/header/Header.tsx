@@ -2,11 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { MainPages } from '../MainPage';
 import './Header.css';
 
-export default function Header(props:any) {
+type TProps = {
+    setActiveScreen: Function
+}
+
+export default function Header({setActiveScreen}: TProps) {
     const [activeButton, setActiveButton] = useState(MainPages.Login);
+    
+    useEffect(() => console.log('header'), [])
 
     const onCliclHandler = (page:MainPages)=> {
-        props.mediator.call('SET_ACTIVE_MAIN_PAGE', [page])
+        setActiveScreen(page);
         setActiveButton(page);
     }
 

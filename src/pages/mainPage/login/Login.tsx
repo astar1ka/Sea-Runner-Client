@@ -1,49 +1,60 @@
-import { useRef, useState, useEffect } from "react"
+import { useRef, Fragment } from "react"
 
-import logo from '../../../source/logo.png';
+
 import './Login.css';
-import { Pages } from "../../../App";
+import { Pages, socket } from "../../../App";
+import GameLogo from "../../elements/gameLogo/GameLogo";
+import useError from "../../../hooks/useError";
 
-export default function Login(props: any) {
+type TProps = {
+    setPage: Function
+}
 
-    const [loginStatus, setLoginStatus] = useState(true);
+export default function Login({ setPage }: TProps) {
+    const login = useRef<HTMLInputElement>(null!);
+    const password = useRef<HTMLInputElement>(null!);
 
-    const login = useRef<HTMLInputElement | null>(null);
-    const password = useRef<HTMLInputElement | null>(null);
+    const [Error, setErrorText, setErrorShow] = useError();
 
-    const loginCallback = (data: object | null) => {
-        if (data) props.mediator.call('SET_PAGE',[Pages.GamePage]);
-        else setLoginStatus(false);
+    const callback = (data: object | null) => {
+        if (data) {
+            setPage(Pages.GamePage);
+        }
+        else {
+            setErrorText('Неверный логин или пароль');
+            setErrorShow(true);
+        };
     }
 
-    const loginHandler = () => {
-        if (login.current?.value && password.current?.value){
-            props.mediator.call('LOG_IN',[login.current.value, password.current.value, loginCallback]);
+    function loginHandler() {
+        if (login.current.value && password.current.value) {
+            socket.login(
+                login.current.value,
+                password.current.value,
+                callback
+            )
         }
     }
 
     return (
-        <div className="login-image">
-            <div className="login-window">
-                <img className='login-logo-image' src={logo}/>
-                <h2 className="h2-login">Sea Runner</h2>
-                <div className="login-window-elems">
-                <div>
+        <Fragment>
+            <div className={"login-image"} onClick={()=>setErrorShow(false)}>
+                <div className={"login-window"}>
+                    <GameLogo/>
                     <div className="inputbox">
                         <i className="icon-user"></i>
-                        <input ref={login} placeholder=' ' required/>    
+                        <input ref={login} placeholder=' ' required />
                         <label htmlFor='login'>Логин</label>
                     </div>
-                    <div className="inputbox" id="passIn"> 
-                        <i className="icon-lock"></i>   
-                        <input  type="password" ref={password} placeholder=' ' required/>
+                    <div className="inputbox">
+                        <i className="icon-lock"></i>
+                        <input type="password" ref={password} placeholder=' ' required />
                         <label htmlFor='password'>Пароль</label>
                     </div>
                     <button className="loginButton" onClick={loginHandler}>Войти</button>
-                    <p className={'errorLogin' + ((loginStatus) ? ' hide' : '')}>Неверный логин или пароль</p>
-                    </div>
+                    {Error}
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
